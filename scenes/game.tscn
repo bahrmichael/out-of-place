@@ -34,4 +34,6 @@ text = "Press a letter that's not in the word above."
 [node name="TransitionTimer" type="Timer" parent="." unique_id=1172980918]
 one_shot = true
 
+[node name="AnalyticsRequest" type="HTTPRequest" parent="." unique_id=2115841596]
+
 [connection signal="timeout" from="TransitionTimer" to="." method="_on_timer_timeout"]
