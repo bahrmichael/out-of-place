@@ -4,6 +4,12 @@ extends Control
 @onready var transition_timer: Timer = $TransitionTimer
 @onready var duration_label: Label = $CenterContainer/VBoxContainer/DurationLabel
 @onready var analytics_request: HTTPRequest = $AnalyticsRequest
+@onready var streak_label: Label = $CenterContainer/VBoxContainer/StreakLabel
+@onready var difficulty_label: Label = $CenterContainer/VBoxContainer/DifficultyLabel
+
+# Increase this when you make a change significant enough that new telemetry
+# data should not be compared to previous data anymore.
+const TELEMETRY_DATA_VERSION = 2
 
 var telemetry: Telemetry
 
@@ -11,6 +17,9 @@ var timestamp_word_shown: int
 var duration: int
 
 var selected_word: String
+
+var difficulty = 1
+var streak = 0
 
 func _ready() -> void:
 	telemetry = Telemetry.create(Time.get_datetime_string_from_system(), analytics_request)
@@ -26,13 +35,27 @@ func _input(event):
 		var correct = character not in selected_word
 		if correct:
 			label.add_theme_color_override("font_color", Color.GREEN)
+			streak += 1
+			if streak % 5 == 0:
+				# Every 3 words done correctly give you a difficulty bump
+				difficulty += 3
 		else:
 			label.add_theme_color_override("font_color", Color.RED)
+			streak = 0
+			difficulty = 1
+		
+		print("%s not in %s: %s" % [character, selected_word, character not in selected_word])
+		
+		streak_label.text = "Streak: %d" % streak
+		difficulty_label.text = "Difficulty: %d" % difficulty
+			
 		transition_timer.start()
 		duration = timestamp_key_pressed - timestamp_word_shown
 		duration_label.text = "%ds %dms" % [duration / 1000, duration % 1000]
 		
 		var request_data = {
+			"version": TELEMETRY_DATA_VERSION,
+			"event": "input_evaluated",
 			"word": selected_word,
 			"duration": duration,
 			"correct": correct,
@@ -41,8 +64,11 @@ func _input(event):
 		telemetry.push(request_data)
 
 func _pick_word() -> void:
-	var words = ["Random", "Rhythm", "Godot", "Play", "Zoo", "Party", "Animals", "Penguin", "Game", "Jens", "Michael", "The world would be a better place, if we all ate Tiramisu all day long."]
+	var words = Words.get_words_for_difficulty(difficulty)
+	# Remove last word from the options so that it doesn't show up immediately again
+	words.remove_at(words.find(selected_word))
 	selected_word = words[randi_range(0, len(words) - 1)]
+	selected_word = selected_word.to_lower()
 	label.text = selected_word
 	label.add_theme_color_override("font_color", Color.WHITE)
 	timestamp_word_shown = Time.get_ticks_msec()
