@@ -41,6 +41,6 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           CHANNEL: web
-          ITCH_GAME: reverse-rhtyhm-game
+          ITCH_GAME: reverse-rhythm-game
           ITCH_USER: bahrdev
           PACKAGE: build/web
