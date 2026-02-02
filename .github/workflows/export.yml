@@ -1,0 +1,32 @@
+name: Export to itch.io
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@49c787482f0e55dc58553a61e8bdbbf47c678ef4
+        with:
+          version: '4.6'
+          include-templates: true
+
+      - name: Export Web
+        run: godot --headless --export-release Web build/web/index.html
+
+      - name: Upload to itch.io
+        uses: yeslayla/butler-publish-itchio-action@eed59bf1db9dfeac10b91f83ec783b095ccdca1b
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: web
+          ITCH_GAME: reverse-rhtyhm-game
+          ITCH_USER: bahrdev
+          PACKAGE: build/web
