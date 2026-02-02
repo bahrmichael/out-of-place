@@ -5,10 +5,7 @@ extends Control
 @onready var duration_label: Label = $CenterContainer/VBoxContainer/DurationLabel
 @onready var analytics_request: HTTPRequest = $AnalyticsRequest
 
-
-const ANALYTICS_URL = "https://webhook.site/8ba3c7f5-8ee4-49e5-bb2c-35e7cfc5df68"
-
-var session_id = "%s" % [Time.get_datetime_string_from_system()]
+var telemetry: Telemetry
 
 var timestamp_word_shown: int
 var duration: int
@@ -16,6 +13,7 @@ var duration: int
 var selected_word: String
 
 func _ready() -> void:
+	telemetry = Telemetry.create(Time.get_datetime_string_from_system(), analytics_request)
 	_pick_word()
 
 func _input(event):
@@ -38,10 +36,9 @@ func _input(event):
 			"word": selected_word,
 			"duration": duration,
 			"correct": correct,
-			"session_id": session_id,
 			"character": character
 		}
-		analytics_request.request(ANALYTICS_URL, [], HTTPClient.METHOD_POST, JSON.stringify(request_data))
+		telemetry.push(request_data)
 
 func _pick_word() -> void:
 	var words = ["Random", "Rhythm", "Godot", "Play", "Zoo", "Party", "Animals", "Penguin", "Game", "Jens", "Michael", "The world would be a better place, if we all ate Tiramisu all day long."]
@@ -58,3 +55,22 @@ func get_character(event: InputEventKey) -> String:
 
 func _on_timer_timeout() -> void:
 	_pick_word()
+
+class Telemetry:
+	
+	const ANALYTICS_URL = "https://game-telemetry.michael-dc8.workers.dev/events"
+	
+	var session_id: String
+	var http_node: HTTPRequest
+	
+	func push(event: Dictionary) -> void:
+		event["session_id"] = session_id
+		# Mediocre security attempt; API also has rate limiting. List endpoint has a different key.
+		var r = http_node.request(ANALYTICS_URL, ["X-API-Key: ec7e89f4c5bd7d95a7a99aef86d3c08956ee7be115877f13bbb5817e85ce8d7a"], HTTPClient.METHOD_POST, JSON.stringify(event))
+		print(r)
+	
+	static func create(session_id: String, http_node: HTTPRequest) -> Telemetry:
+		var t = Telemetry.new()
+		t.http_node = http_node
+		t.session_id
+		return t
