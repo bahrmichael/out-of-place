@@ -66,8 +66,7 @@ class Telemetry:
 	func push(event: Dictionary) -> void:
 		event["session_id"] = session_id
 		# Mediocre security attempt; API also has rate limiting. List endpoint has a different key.
-		var r = http_node.request(ANALYTICS_URL, ["X-API-Key: ec7e89f4c5bd7d95a7a99aef86d3c08956ee7be115877f13bbb5817e85ce8d7a"], HTTPClient.METHOD_POST, JSON.stringify(event))
-		print(r)
+		http_node.request(ANALYTICS_URL, ["X-API-Key: ec7e89f4c5bd7d95a7a99aef86d3c08956ee7be115877f13bbb5817e85ce8d7a"], HTTPClient.METHOD_POST, JSON.stringify(event))
 	
 	static func create(session_id: String, http_node: HTTPRequest) -> Telemetry:
 		var t = Telemetry.new()
