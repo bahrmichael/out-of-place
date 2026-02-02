@@ -27,18 +27,22 @@ theme_override_constants/separation = 20
 
 [node name="Word" type="Label" parent="CenterContainer/VBoxContainer" unique_id=692028717]
 layout_mode = 2
+size_flags_horizontal = 4
 text = "WAS"
 
 [node name="DurationLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1668004627]
 layout_mode = 2
+size_flags_horizontal = 4
 text = "Press a letter that's not in the word above."
 
 [node name="StreakLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=13728263]
 layout_mode = 2
+size_flags_horizontal = 4
 text = "Streak: 0"
 
 [node name="DifficultyLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1718096726]
 layout_mode = 2
+size_flags_horizontal = 4
 text = "Difficulty: 1"
 
 [node name="TransitionTimer" type="Timer" parent="." unique_id=1172980918]

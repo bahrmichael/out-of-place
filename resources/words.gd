@@ -29,7 +29,21 @@ func _collect_words(arr: Array) -> Array[String]:
 		if "word" in a:
 			result.append(a["word"])
 	return result
-			
+
+
+func get_unique_sorted_letters(text: String) -> Array:
+	var result_dict := {}
+	var lowerletters_regex := RegEx.new()
+	lowerletters_regex.compile("[a-z]")
+
+	
+	for l in text.to_lower():
+		if lowerletters_regex.search(l):
+			result_dict[l] = true
+	var result := result_dict.keys()
+	result.sort()
+	return result
+
 
 # I collected country names from https://random-words-api.kushcreates.com/
 # with the query https://random-words-api.kushcreates.com/api?language=en&category=countries&length=7&type=capitalized 
