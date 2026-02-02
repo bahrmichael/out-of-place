@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://yicge48108e0"]
 
 [ext_resource type="Script" uid="uid://ctsyod2uddfrl" path="res://scenes/game.gd" id="1_uwrxv"]
+[ext_resource type="AudioStream" uid="uid://b7800ddtyjhxj" path="res://assets/013_Confirm_03.wav" id="2_yqjtg"]
+[ext_resource type="AudioStream" uid="uid://w5wn8a28fwb3" path="res://assets/033_Denied_03.wav" id="3_lnu2h"]
 
 [node name="Game" type="Control" unique_id=1104126294]
 layout_mode = 3
@@ -43,5 +45,11 @@ text = "Difficulty: 1"
 one_shot = true
 
 [node name="AnalyticsRequest" type="HTTPRequest" parent="." unique_id=2115841596]
+
+[node name="AudioStreamPlayerSuccess" type="AudioStreamPlayer" parent="." unique_id=985488732]
+stream = ExtResource("2_yqjtg")
+
+[node name="AudioStreamPlayerFailure" type="AudioStreamPlayer" parent="." unique_id=1374470619]
+stream = ExtResource("3_lnu2h")
 
 [connection signal="timeout" from="TransitionTimer" to="." method="_on_timer_timeout"]

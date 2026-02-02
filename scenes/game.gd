@@ -6,6 +6,10 @@ extends Control
 @onready var analytics_request: HTTPRequest = $AnalyticsRequest
 @onready var streak_label: Label = $CenterContainer/VBoxContainer/StreakLabel
 @onready var difficulty_label: Label = $CenterContainer/VBoxContainer/DifficultyLabel
+@onready var audio_stream_player_success: AudioStreamPlayer = $AudioStreamPlayerSuccess
+@onready var audio_stream_player_failure: AudioStreamPlayer = $AudioStreamPlayerFailure
+
+
 
 # Increase this when you make a change significant enough that new telemetry
 # data should not be compared to previous data anymore.
@@ -34,12 +38,14 @@ func _input(event):
 		var character = get_character(event)
 		var correct = character not in selected_word
 		if correct:
+			audio_stream_player_success.play()
 			label.add_theme_color_override("font_color", Color.GREEN)
 			streak += 1
 			if streak % 5 == 0:
 				# Every 3 words done correctly give you a difficulty bump
 				difficulty += 3
 		else:
+			audio_stream_player_failure.play()
 			label.add_theme_color_override("font_color", Color.RED)
 			streak = 0
 			difficulty = 1
