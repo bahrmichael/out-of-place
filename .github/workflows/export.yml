@@ -16,6 +16,14 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Cache Godot
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/godot/
+            ~/.cache/godot/
+          key: godot-4.6.0-${{ runner.os }}
+
       - name: Setup Godot
         uses: chickensoft-games/setup-godot@49c787482f0e55dc58553a61e8bdbbf47c678ef4
         with:
@@ -24,7 +32,9 @@ jobs:
           include-templates: true
 
       - name: Export Web
-        run: godot --headless --export-release Web build/web/index.html
+        run: |
+          mkdir -p build/web
+          godot --headless --export-release Web build/web/index.html
 
       - name: Upload to itch.io
         uses: yeslayla/butler-publish-itchio-action@eed59bf1db9dfeac10b91f83ec783b095ccdca1b
