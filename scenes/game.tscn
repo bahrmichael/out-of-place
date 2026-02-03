@@ -35,7 +35,7 @@ text = "... loading ..."
 [node name="DurationLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1668004627]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Press a letter that's not in the word above."
+text = "Press a letter that's not in the text above."
 
 [node name="StreakLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=13728263]
 layout_mode = 2

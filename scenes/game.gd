@@ -114,7 +114,7 @@ func _pick_word() -> void:
 	selected_word = selected_word.to_lower()
 	label.add_theme_color_override("font_color", Color.WHITE)
 	timestamp_word_shown = Time.get_ticks_msec()
-	duration_label.text = "Press a letter that's not in the word above."
+	duration_label.text = "Press a letter that's not in the text above."
 	
 	# preload the next word
 	if len(letter_weights) == 0:
