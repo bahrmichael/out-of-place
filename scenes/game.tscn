@@ -28,7 +28,9 @@ theme_override_constants/separation = 20
 [node name="Word" type="Label" parent="CenterContainer/VBoxContainer" unique_id=692028717]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "WAS"
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 64
+text = "... loading ..."
 
 [node name="DurationLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1668004627]
 layout_mode = 2
@@ -44,6 +46,10 @@ text = "Streak: 0"
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Difficulty: 1"
+
+[node name="HighscoreLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1375314850]
+layout_mode = 2
+horizontal_alignment = 1
 
 [node name="TransitionTimer" type="Timer" parent="." unique_id=1172980918]
 one_shot = true

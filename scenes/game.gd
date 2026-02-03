@@ -9,6 +9,8 @@ extends Control
 @onready var audio_stream_player_failure: AudioStreamPlayer = $AudioStreamPlayerFailure
 @onready var analytics_request: HTTPRequest = $AnalyticsRequest
 @onready var text_request: HTTPRequest = $TextRequest
+@onready var highscore_label: Label = $CenterContainer/VBoxContainer/HighscoreLabel
+
 
 # Increase this when you make a change significant enough that new telemetry
 # data should not be compared to previous data anymore.
@@ -27,12 +29,23 @@ var difficulty = 1
 var streak = 0
 
 func _ready() -> void:
+	Score.score_changed.connect(_on_score_changed)
+	Score.highscore_changed.connect(_on_highscore_changed)
+	
 	telemetry = Telemetry.create(Time.get_datetime_string_from_system(), analytics_request)
 	text_request.request_completed.connect(_on_text_request_completed)
 	text_retriever = TextRetriever.create(text_request)
 	text_retriever.get_text("a", 15)
 	# We're picking the first word at the end of _on_text_request_completed
 	
+	_on_highscore_changed(Score.highscore)
+
+func _on_score_changed(s: int) -> void:
+	streak_label.text = "Streak: %d" % s
+
+func _on_highscore_changed(s: int) -> void:
+	highscore_label.text = "Highscore: %d" % s
+
 func _on_text_request_completed(result, response_code, headers, body) -> void:
 	var j = JSON.parse_string(body.get_string_from_utf8())
 	next_word = j["text"]
@@ -56,6 +69,7 @@ func _input(event):
 			if streak % 5 == 0:
 				# Every 3 words done correctly give you a difficulty bump
 				difficulty += 3
+			Score.update_score(streak)
 		else:
 			audio_stream_player_failure.play()
 			label.add_theme_color_override("font_color", Color.RED)
@@ -66,7 +80,6 @@ func _input(event):
 		
 		print("%s not in %s: %s" % [character, selected_word, character not in selected_word])
 		
-		streak_label.text = "Streak: %d" % streak
 		difficulty_label.text = "Difficulty: %d" % difficulty
 			
 		transition_timer.start()
