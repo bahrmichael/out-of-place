@@ -56,4 +56,6 @@ stream = ExtResource("2_yqjtg")
 [node name="AudioStreamPlayerFailure" type="AudioStreamPlayer" parent="." unique_id=1374470619]
 stream = ExtResource("3_lnu2h")
 
+[node name="TextRequest" type="HTTPRequest" parent="." unique_id=1585319556]
+
 [connection signal="timeout" from="TransitionTimer" to="." method="_on_timer_timeout"]

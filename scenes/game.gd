@@ -3,31 +3,43 @@ extends Control
 @onready var label: Label = $CenterContainer/VBoxContainer/Word
 @onready var transition_timer: Timer = $TransitionTimer
 @onready var duration_label: Label = $CenterContainer/VBoxContainer/DurationLabel
-@onready var analytics_request: HTTPRequest = $AnalyticsRequest
 @onready var streak_label: Label = $CenterContainer/VBoxContainer/StreakLabel
 @onready var difficulty_label: Label = $CenterContainer/VBoxContainer/DifficultyLabel
 @onready var audio_stream_player_success: AudioStreamPlayer = $AudioStreamPlayerSuccess
 @onready var audio_stream_player_failure: AudioStreamPlayer = $AudioStreamPlayerFailure
-
-
+@onready var analytics_request: HTTPRequest = $AnalyticsRequest
+@onready var text_request: HTTPRequest = $TextRequest
 
 # Increase this when you make a change significant enough that new telemetry
 # data should not be compared to previous data anymore.
-const TELEMETRY_DATA_VERSION = 2
+const TELEMETRY_DATA_VERSION = 3
 
 var telemetry: Telemetry
+var text_retriever: TextRetriever
 
 var timestamp_word_shown: int
 var duration: int
 
-var selected_word: String
+var selected_word: String = ""
+var next_word: String = ""
 
 var difficulty = 1
 var streak = 0
 
 func _ready() -> void:
 	telemetry = Telemetry.create(Time.get_datetime_string_from_system(), analytics_request)
-	_pick_word()
+	text_request.request_completed.connect(_on_text_request_completed)
+	text_retriever = TextRetriever.create(text_request)
+	text_retriever.get_text("a", 15)
+	# We're picking the first word at the end of _on_text_request_completed
+	
+func _on_text_request_completed(result, response_code, headers, body) -> void:
+	var j = JSON.parse_string(body.get_string_from_utf8())
+	next_word = j["text"]
+
+	# Special handling for when we didn't init the first word yet at the beginning of the session
+	if selected_word == "":
+		_pick_word()
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -50,6 +62,8 @@ func _input(event):
 			streak = 0
 			difficulty = 1
 		
+		_increase_added_weight(character)
+		
 		print("%s not in %s: %s" % [character, selected_word, character not in selected_word])
 		
 		streak_label.text = "Streak: %d" % streak
@@ -69,16 +83,59 @@ func _input(event):
 		}
 		telemetry.push(request_data)
 
+func get_random_lowercase_letter() -> String:
+	return String(char(randi() % 26 + 97))
+
+var letters = "abcdefghijklmnopqrstuvwxyz"
+var letter_weights = []
+
 func _pick_word() -> void:
-	var words = Words.get_words_for_difficulty(difficulty)
+	selected_word = next_word
+	next_word = ""
+	
+	#var words = Words.get_words_for_difficulty(difficulty)
 	# Remove last word from the options so that it doesn't show up immediately again
-	words.remove_at(words.find(selected_word))
-	selected_word = words[randi_range(0, len(words) - 1)]
-	selected_word = selected_word.to_lower()
+	#words.remove_at(words.find(selected_word))
+	#selected_word = words[randi_range(0, len(words) - 1)]
 	label.text = selected_word
+	selected_word = selected_word.to_lower()
 	label.add_theme_color_override("font_color", Color.WHITE)
 	timestamp_word_shown = Time.get_ticks_msec()
 	duration_label.text = "Press a letter that's not in the word above."
+	
+	# preload the next word
+	if len(letter_weights) == 0:
+		letter_weights.resize(26)
+		letter_weights.fill(1)
+	
+	var rng = RandomNumberGenerator.new()
+	var included_letter = letters[rng.rand_weighted(letter_weights)]
+	print(included_letter)
+	_update_weights(included_letter)
+	text_retriever.get_text(included_letter, difficulty + 15)
+
+var letter_frequencies = { "a": 8.167, "b": 1.492, "c": 2.782, "d": 4.253, "e": 12.702, "f": 2.228, "g": 2.015, "h": 6.094, "i": 6.966, "j": 0.153, "k": 0.772, "l": 4.025, "m": 2.406, "n": 6.749, "o": 7.507, "p": 1.929, "q": 0.095, "r": 5.987, "s": 6.327, "t": 9.056, "u": 2.758, "v": 0.978, "w": 2.360, "x": 0.150, "y": 1.974, "z": 0.074 }
+# todo michael: init all of them with 0. i was too lazy to do that.
+var letters_used = { "a": 0, "b": 0, "c": 0, "d": 0, "e": 0, "f": 0, "g": 2.015, "h": 6.094, "i": 6.966, "j": 0.153, "k": 0.772, "l": 4.025, "m": 2.406, "n": 6.749, "o": 7.507, "p": 1.929, "q": 0.095, "r": 5.987, "s": 6.327, "t": 9.056, "u": 2.758, "v": 0.978, "w": 2.360, "x": 0.150, "y": 1.974, "z": 0.074 }
+
+func _update_weights(included_letter: String) -> void:
+	var idx = letters.find(included_letter)
+	for i in range(len(letter_weights)):
+		var l = letters[i]
+		if i == idx:
+			letter_weights[i] = 0
+		else:
+			letter_weights[i] += 15 - letter_frequencies[l]
+		
+		letter_weights[i] += letters_used[l]
+
+var additional_weights = []
+
+func _increase_added_weight(letter: String) -> void:
+	if letters_used[letter] > 1:
+		letters_used[letter] *= 2
+	else:
+		letters_used[letter] += 1
 
 func get_character(event: InputEventKey) -> String:
 	var physical_keycode = event.physical_keycode
@@ -87,6 +144,19 @@ func get_character(event: InputEventKey) -> String:
 
 func _on_timer_timeout() -> void:
 	_pick_word()
+
+class TextRetriever:
+	
+	const URL = "https://game-telemetry.michael-dc8.workers.dev/text"
+	var http_node: HTTPRequest
+	
+	func get_text(included_letter: String, length: int) -> void:
+		http_node.request("%s?letter=%s&length=%d" % [URL, included_letter, length], ["X-API-Key: ec7e89f4c5bd7d95a7a99aef86d3c08956ee7be115877f13bbb5817e85ce8d7a"])
+	
+	static func create(http_node: HTTPRequest) -> TextRetriever:
+		var t = TextRetriever.new()
+		t.http_node = http_node
+		return t
 
 class Telemetry:
 	
