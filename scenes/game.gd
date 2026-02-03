@@ -4,7 +4,6 @@ extends Control
 @onready var transition_timer: Timer = $TransitionTimer
 @onready var duration_label: Label = $CenterContainer/VBoxContainer/DurationLabel
 @onready var streak_label: Label = $CenterContainer/VBoxContainer/StreakLabel
-@onready var difficulty_label: Label = $CenterContainer/VBoxContainer/DifficultyLabel
 @onready var audio_stream_player_success: AudioStreamPlayer = $AudioStreamPlayerSuccess
 @onready var audio_stream_player_failure: AudioStreamPlayer = $AudioStreamPlayerFailure
 @onready var analytics_request: HTTPRequest = $AnalyticsRequest
@@ -25,7 +24,6 @@ var duration: int
 var selected_word: String = ""
 var next_word: String = ""
 
-var difficulty = 1
 var streak = 0
 
 func _ready() -> void:
@@ -61,26 +59,22 @@ func _input(event):
 			return
 		var timestamp_key_pressed = Time.get_ticks_msec()
 		var character = get_character(event)
+		if character not in letters:
+			return
 		var correct = character not in selected_word
 		if correct:
 			audio_stream_player_success.play()
 			label.add_theme_color_override("font_color", Color.GREEN)
 			streak += 1
-			if streak % 5 == 0:
-				# Every 3 words done correctly give you a difficulty bump
-				difficulty += 3
 			Score.update_score(streak)
 		else:
 			audio_stream_player_failure.play()
 			label.add_theme_color_override("font_color", Color.RED)
 			streak = 0
-			difficulty = 1
 		
 		_increase_added_weight(character)
 		
 		print("%s not in %s: %s" % [character, selected_word, character not in selected_word])
-		
-		difficulty_label.text = "Difficulty: %d" % difficulty
 			
 		transition_timer.start()
 		duration = timestamp_key_pressed - timestamp_word_shown
@@ -106,15 +100,11 @@ func _pick_word() -> void:
 	selected_word = next_word
 	next_word = ""
 	
-	#var words = Words.get_words_for_difficulty(difficulty)
-	# Remove last word from the options so that it doesn't show up immediately again
-	#words.remove_at(words.find(selected_word))
-	#selected_word = words[randi_range(0, len(words) - 1)]
 	label.text = selected_word
 	selected_word = selected_word.to_lower()
 	label.add_theme_color_override("font_color", Color.WHITE)
 	timestamp_word_shown = Time.get_ticks_msec()
-	duration_label.text = "Press a letter that's not in the text above."
+	duration_label.text = "Press a letter (a-z) that's not in the text above."
 	
 	# preload the next word
 	if len(letter_weights) == 0:
@@ -125,7 +115,7 @@ func _pick_word() -> void:
 	var included_letter = letters[rng.rand_weighted(letter_weights)]
 	print(included_letter)
 	_update_weights(included_letter)
-	text_retriever.get_text(included_letter, difficulty + 15)
+	text_retriever.get_text(included_letter, streak + 15)
 
 var letter_frequencies = { "a": 8.167, "b": 1.492, "c": 2.782, "d": 4.253, "e": 12.702, "f": 2.228, "g": 2.015, "h": 6.094, "i": 6.966, "j": 0.153, "k": 0.772, "l": 4.025, "m": 2.406, "n": 6.749, "o": 7.507, "p": 1.929, "q": 0.095, "r": 5.987, "s": 6.327, "t": 9.056, "u": 2.758, "v": 0.978, "w": 2.360, "x": 0.150, "y": 1.974, "z": 0.074 }
 # todo michael: init all of them with 0. i was too lazy to do that.

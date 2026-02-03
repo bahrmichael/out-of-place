@@ -35,17 +35,12 @@ text = "... loading ..."
 [node name="DurationLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1668004627]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Press a letter that's not in the text above."
+text = "Press a letter (a-z) that's not in the text above."
 
 [node name="StreakLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=13728263]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Streak: 0"
-
-[node name="DifficultyLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1718096726]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Difficulty: 1"
 
 [node name="HighscoreLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1375314850]
 layout_mode = 2
