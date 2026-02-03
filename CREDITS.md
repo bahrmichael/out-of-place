@@ -1,2 +1,3 @@
 - SFX: https://leohpaz.itch.io/rpg-essentials-sfx-free
 - BG Music: Music by DIMMYSAD from Pixabay https://pixabay.com/music/drum-n-bass-jungle-waves-drumampbass-electronic-inspiring-promo-345013/
+- Volume Slider Code: https://shaggydev.com/2023/05/22/volume-sliders/

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://yicge48108e0"]
 
 [ext_resource type="Script" uid="uid://ctsyod2uddfrl" path="res://scenes/game.gd" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://8wyvgqm3psgv" path="res://resources/volume_slider.gd" id="2_iywne"]
 [ext_resource type="AudioStream" uid="uid://b7800ddtyjhxj" path="res://assets/013_Confirm_03.wav" id="2_yqjtg"]
 [ext_resource type="AudioStream" uid="uid://w5wn8a28fwb3" path="res://assets/033_Denied_03.wav" id="3_lnu2h"]
 [ext_resource type="AudioStream" uid="uid://qu6gw4djqxpg" path="res://scenes/dimmysad-jungle-waves-drumampbass-electronic-inspiring-promo-345013.mp3" id="4_lbhrr"]
@@ -21,6 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.9899617, 0.9978807)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1464689620]
 layout_mode = 2
@@ -47,6 +49,70 @@ text = "Streak: 0"
 layout_mode = 2
 horizontal_alignment = 1
 
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1725338009]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Sound control:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=1521402972]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer" unique_id=1745340369]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+
+[node name="master label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=2026543988]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Master: "
+
+[node name="master" type="HSlider" parent="CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1726715458]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+tick_count = 1
+ticks_on_borders = true
+script = ExtResource("2_iywne")
+bus_name = "Master"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer" unique_id=1535758973]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+
+[node name="music lable" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=46126362]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Music: "
+
+[node name="music" type="HSlider" parent="CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=622440114]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+tick_count = 1
+ticks_on_borders = true
+script = ExtResource("2_iywne")
+bus_name = "Master"
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer" unique_id=239670282]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+
+[node name="sfx label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=74164072]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "SFX: "
+
+[node name="sfx" type="HSlider" parent="CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=1894540410]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+tick_count = 1
+ticks_on_borders = true
+script = ExtResource("2_iywne")
+bus_name = "Master"
+
 [node name="TransitionTimer" type="Timer" parent="." unique_id=1172980918]
 one_shot = true
 
@@ -54,15 +120,19 @@ one_shot = true
 
 [node name="AudioStreamPlayerSuccess" type="AudioStreamPlayer" parent="." unique_id=985488732]
 stream = ExtResource("2_yqjtg")
+bus = &"sfx"
 
 [node name="AudioStreamPlayerFailure" type="AudioStreamPlayer" parent="." unique_id=1374470619]
 stream = ExtResource("3_lnu2h")
+bus = &"sfx"
 
 [node name="TextRequest" type="HTTPRequest" parent="." unique_id=1585319556]
 
 [node name="AudioStreamPlayerBGmusic" type="AudioStreamPlayer" parent="." unique_id=1479531999]
 stream = ExtResource("4_lbhrr")
+volume_db = -20.0
 autoplay = true
+bus = &"music"
 parameters/looping = true
 
 [connection signal="timeout" from="TransitionTimer" to="." method="_on_timer_timeout"]
