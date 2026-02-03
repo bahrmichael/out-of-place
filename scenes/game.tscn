@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ctsyod2uddfrl" path="res://scenes/game.gd" id="1_uwrxv"]
 [ext_resource type="AudioStream" uid="uid://b7800ddtyjhxj" path="res://assets/013_Confirm_03.wav" id="2_yqjtg"]
 [ext_resource type="AudioStream" uid="uid://w5wn8a28fwb3" path="res://assets/033_Denied_03.wav" id="3_lnu2h"]
+[ext_resource type="AudioStream" uid="uid://qu6gw4djqxpg" path="res://scenes/dimmysad-jungle-waves-drumampbass-electronic-inspiring-promo-345013.mp3" id="4_lbhrr"]
 
 [node name="Game" type="Control" unique_id=1104126294]
 layout_mode = 3
@@ -58,5 +59,10 @@ stream = ExtResource("2_yqjtg")
 stream = ExtResource("3_lnu2h")
 
 [node name="TextRequest" type="HTTPRequest" parent="." unique_id=1585319556]
+
+[node name="AudioStreamPlayerBGmusic" type="AudioStreamPlayer" parent="." unique_id=1479531999]
+stream = ExtResource("4_lbhrr")
+autoplay = true
+parameters/looping = true
 
 [connection signal="timeout" from="TransitionTimer" to="." method="_on_timer_timeout"]
