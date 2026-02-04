@@ -33,3 +33,4 @@ Score="*uid://cvxsur1erx5ac"
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.3372549, 0.18431373, 0, 1)

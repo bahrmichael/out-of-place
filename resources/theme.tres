@@ -1,3 +1,8 @@
 [gd_resource type="Theme" format=3 uid="uid://dhbrkuusslnnf"]
 
+[ext_resource type="FontFile" uid="uid://cjj4mdbsox2no" path="res://assets/ELEGANT TYPEWRITER Regular.ttf" id="1_d4nwg"]
+
 [resource]
+default_font = ExtResource("1_d4nwg")
+default_font_size = 24
+Label/colors/font_color = Color(1, 0.99215686, 0.94509804, 1)
