@@ -18,7 +18,7 @@ grow_vertical = 2
 theme = ExtResource("1_lbhrr")
 script = ExtResource("1_uwrxv")
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=2083252228]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1055003797]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,12 +26,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.9899617, 0.9978807)
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1464689620]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1464689620]
 layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=300857897]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 20
 
-[node name="Word" type="Label" parent="CenterContainer/VBoxContainer" unique_id=692028717]
+[node name="Word" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=692028717]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/outline_size = 6
@@ -41,40 +47,41 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("3_u5sy4")
 
-[node name="DurationLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1668004627]
+[node name="DurationLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=1668004627]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Press a letter (a-z) that's not in the text above."
 
-[node name="StreakLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=13728263]
+[node name="StreakLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=13728263]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Streak: 0"
 
-[node name="HighscoreLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1375314850]
+[node name="HighscoreLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=1375314850]
 layout_mode = 2
 horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1725338009]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1521402972]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1725338009]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Sound control:"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=1521402972]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer" unique_id=1745340369]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1745340369]
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 
-[node name="master label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=2026543988]
+[node name="master label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=2026543988]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Master: "
 
-[node name="master" type="HSlider" parent="CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1726715458]
+[node name="master" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1726715458]
 layout_mode = 2
 max_value = 1.0
 step = 0.001
@@ -83,16 +90,16 @@ ticks_on_borders = true
 script = ExtResource("2_iywne")
 bus_name = "Master"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer" unique_id=1535758973]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1535758973]
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 
-[node name="music lable" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=46126362]
+[node name="music lable" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=46126362]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Music: "
 
-[node name="music" type="HSlider" parent="CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=622440114]
+[node name="music" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer2" unique_id=622440114]
 layout_mode = 2
 max_value = 1.0
 step = 0.001
@@ -101,16 +108,16 @@ ticks_on_borders = true
 script = ExtResource("2_iywne")
 bus_name = "Master"
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxContainer" unique_id=239670282]
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=239670282]
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 
-[node name="sfx label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=74164072]
+[node name="sfx label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=74164072]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "SFX: "
 
-[node name="sfx" type="HSlider" parent="CenterContainer/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=1894540410]
+[node name="sfx" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer3" unique_id=1894540410]
 layout_mode = 2
 max_value = 1.0
 step = 0.001

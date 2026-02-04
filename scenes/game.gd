@@ -1,14 +1,15 @@
 extends Control
 
-@onready var label: Label = $CenterContainer/VBoxContainer/Word
 @onready var transition_timer: Timer = $TransitionTimer
-@onready var duration_label: Label = $CenterContainer/VBoxContainer/DurationLabel
-@onready var streak_label: Label = $CenterContainer/VBoxContainer/StreakLabel
+@onready var label: Label = $MarginContainer/VBoxContainer/VBoxContainer/Word
+@onready var duration_label: Label = $MarginContainer/VBoxContainer/VBoxContainer/DurationLabel
+@onready var streak_label: Label = $MarginContainer/VBoxContainer/VBoxContainer/StreakLabel
+@onready var highscore_label: Label = $MarginContainer/VBoxContainer/VBoxContainer/HighscoreLabel
+
 @onready var audio_stream_player_success: AudioStreamPlayer = $AudioStreamPlayerSuccess
 @onready var audio_stream_player_failure: AudioStreamPlayer = $AudioStreamPlayerFailure
 @onready var analytics_request: HTTPRequest = $AnalyticsRequest
 @onready var text_request: HTTPRequest = $TextRequest
-@onready var highscore_label: Label = $CenterContainer/VBoxContainer/HighscoreLabel
 
 
 # Increase this when you make a change significant enough that new telemetry
