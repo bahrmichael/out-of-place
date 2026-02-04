@@ -72,6 +72,7 @@ func _input(event):
 			audio_stream_player_failure.play()
 			label.add_theme_color_override("font_color", Color.RED)
 			streak = 0
+			Score.update_score(streak)
 		
 		_increase_added_weight(character)
 		
