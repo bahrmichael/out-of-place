@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://yicge48108e0"]
 
+[ext_resource type="Theme" uid="uid://dhbrkuusslnnf" path="res://resources/theme.tres" id="1_lbhrr"]
 [ext_resource type="Script" uid="uid://ctsyod2uddfrl" path="res://scenes/game.gd" id="1_uwrxv"]
 [ext_resource type="AudioStream" uid="uid://b7800ddtyjhxj" path="res://assets/013_Confirm_03.wav" id="2_yqjtg"]
 [ext_resource type="AudioStream" uid="uid://w5wn8a28fwb3" path="res://assets/033_Denied_03.wav" id="3_lnu2h"]
@@ -11,6 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_lbhrr")
 script = ExtResource("1_uwrxv")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=2083252228]
