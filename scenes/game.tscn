@@ -2,9 +2,10 @@
 
 [ext_resource type="Theme" uid="uid://dhbrkuusslnnf" path="res://resources/theme.tres" id="1_lbhrr"]
 [ext_resource type="Script" uid="uid://ctsyod2uddfrl" path="res://scenes/game.gd" id="1_uwrxv"]
-[ext_resource type="Script" uid="uid://8wyvgqm3psgv" path="res://resources/volume_slider.gd" id="2_iywne"]
+[ext_resource type="Script" path="res://resources/volume_slider.gd" id="2_iywne"]
 [ext_resource type="AudioStream" uid="uid://b7800ddtyjhxj" path="res://assets/013_Confirm_03.wav" id="2_yqjtg"]
 [ext_resource type="AudioStream" uid="uid://w5wn8a28fwb3" path="res://assets/033_Denied_03.wav" id="3_lnu2h"]
+[ext_resource type="Script" uid="uid://wru5ladtj1ax" path="res://scenes/typedlabel.gd" id="3_u5sy4"]
 [ext_resource type="AudioStream" uid="uid://qu6gw4djqxpg" path="res://scenes/dimmysad-jungle-waves-drumampbass-electronic-inspiring-promo-345013.mp3" id="4_lbhrr"]
 
 [node name="Game" type="Control" unique_id=1104126294]
@@ -35,7 +36,10 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 64
-text = "... loading ..."
+text = "loading ..."
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_u5sy4")
 
 [node name="DurationLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1668004627]
 layout_mode = 2
@@ -122,11 +126,9 @@ one_shot = true
 
 [node name="AudioStreamPlayerSuccess" type="AudioStreamPlayer" parent="." unique_id=985488732]
 stream = ExtResource("2_yqjtg")
-bus = &"sfx"
 
 [node name="AudioStreamPlayerFailure" type="AudioStreamPlayer" parent="." unique_id=1374470619]
 stream = ExtResource("3_lnu2h")
-bus = &"sfx"
 
 [node name="TextRequest" type="HTTPRequest" parent="." unique_id=1585319556]
 
@@ -134,7 +136,6 @@ bus = &"sfx"
 stream = ExtResource("4_lbhrr")
 volume_db = -20.0
 autoplay = true
-bus = &"music"
 parameters/looping = true
 
 [connection signal="timeout" from="TransitionTimer" to="." method="_on_timer_timeout"]

@@ -99,7 +99,7 @@ var letter_weights = []
 func _pick_word() -> void:
 	selected_word = next_word
 	next_word = ""
-	
+	label._reset()
 	label.text = selected_word
 	selected_word = selected_word.to_lower()
 	label.add_theme_color_override("font_color", Color.WHITE)
