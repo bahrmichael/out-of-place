@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://resources/volume_slider.gd" id="2_iywne"]
 [ext_resource type="AudioStream" uid="uid://b7800ddtyjhxj" path="res://assets/013_Confirm_03.wav" id="2_yqjtg"]
 [ext_resource type="AudioStream" uid="uid://w5wn8a28fwb3" path="res://assets/033_Denied_03.wav" id="3_lnu2h"]
+[ext_resource type="Script" uid="uid://wru5ladtj1ax" path="res://scenes/typedlabel.gd" id="3_u5sy4"]
 [ext_resource type="AudioStream" uid="uid://qu6gw4djqxpg" path="res://scenes/dimmysad-jungle-waves-drumampbass-electronic-inspiring-promo-345013.mp3" id="4_lbhrr"]
 
 [node name="Game" type="Control" unique_id=1104126294]
@@ -35,7 +36,10 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 64
-text = "... loading ..."
+text = "loading ..."
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_u5sy4")
 
 [node name="DurationLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1668004627]
 layout_mode = 2
