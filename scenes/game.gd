@@ -3,7 +3,7 @@ extends Control
 @onready var transition_timer: Timer = $TransitionTimer
 @onready var label: Label = $MarginContainer/VBoxContainer/VBoxContainer/Word
 @onready var duration_label: Label = $MarginContainer/VBoxContainer/VBoxContainer/DurationLabel
-@onready var streak_label: Label = $MarginContainer/VBoxContainer/VBoxContainer/StreakLabel
+@onready var streak_label: RichTextLabel = $MarginContainer/VBoxContainer/VBoxContainer/StreakLabel
 @onready var highscore_label: Label = $MarginContainer/VBoxContainer/VBoxContainer/HighscoreLabel
 
 @onready var audio_stream_player_success: AudioStreamPlayer = $AudioStreamPlayerSuccess
@@ -40,7 +40,22 @@ func _ready() -> void:
 	_on_highscore_changed(Score.highscore)
 
 func _on_score_changed(s: int) -> void:
-	streak_label.text = "Streak: %d" % s
+	streak_label.text = "[center]Streak: %d[/center]" % s
+	if s >= 60:
+		streak_label.text = "[rainbow][shake]%s[/shake][/rainbow]" % streak_label.text
+	elif s >= 50:
+		streak_label.text = "[rainbow][wave]%s[/wave][/rainbow]" % streak_label.text
+	elif s >= 40:
+		streak_label.text = "[rainbow]%s[/rainbow]" % streak_label.text
+	elif s >= 30:
+		streak_label.text = "[tornado]%s[/tornado]" % streak_label.text
+	elif s >= 20:
+		streak_label.text = "[shake]%s[/shake]" % streak_label.text
+	elif s >= 10:
+		streak_label.text = "[pulse]%s[/pulse]" % streak_label.text
+	elif s >= 5:
+		streak_label.text = "[wave]%s[/wave]" % streak_label.text
+		
 
 func _on_highscore_changed(s: int) -> void:
 	highscore_label.text = "Highscore: %d" % s

@@ -72,10 +72,13 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Press a letter (a-z) that's not in the text above."
 
-[node name="StreakLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=13728263]
+[node name="StreakLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=1134107590]
+clip_contents = false
+custom_minimum_size = Vector2(250, 50)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Streak: 0"
+bbcode_enabled = true
+text = "[center]Streak: 0[/center]"
 
 [node name="HighscoreLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=1375314850]
 layout_mode = 2
