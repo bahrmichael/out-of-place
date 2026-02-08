@@ -25,9 +25,11 @@ one_shot = true
 
 [node name="AudioStreamPlayerSuccess" type="AudioStreamPlayer" parent="." unique_id=985488732]
 stream = ExtResource("2_yqjtg")
+bus = &"sfx"
 
 [node name="AudioStreamPlayerFailure" type="AudioStreamPlayer" parent="." unique_id=1374470619]
 stream = ExtResource("3_lnu2h")
+bus = &"sfx"
 
 [node name="TextRequest" type="HTTPRequest" parent="." unique_id=1585319556]
 
@@ -35,6 +37,7 @@ stream = ExtResource("3_lnu2h")
 stream = ExtResource("4_lbhrr")
 volume_db = -20.0
 autoplay = true
+bus = &"music"
 parameters/looping = true
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1055003797]
@@ -129,7 +132,7 @@ step = 0.001
 tick_count = 1
 ticks_on_borders = true
 script = ExtResource("2_iywne")
-bus_name = "Master"
+bus_name = "music"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=239670282]
 custom_minimum_size = Vector2(110, 0)
@@ -147,6 +150,6 @@ step = 0.001
 tick_count = 1
 ticks_on_borders = true
 script = ExtResource("2_iywne")
-bus_name = "Master"
+bus_name = "sfx"
 
 [connection signal="timeout" from="TransitionTimer" to="." method="_on_timer_timeout"]

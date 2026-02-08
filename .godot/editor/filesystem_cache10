@@ -1,5 +1,5 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1770237365
+::res://::1770543770
 CREDITS.md::TextFile::-1::1770236895::0::1::::<><><>0<>0<><>::
 default_bus_layout.tres::AudioBusLayout::4749146070369331163::1770236888::0::1::::<><><>0<>0<><>::
 export_presets.cfg::TextFile::-1::1770055764::0::1::::<><><>0<>0<><>::
@@ -10,14 +10,14 @@ README.md::TextFile::-1::1769981377::0::1::::<><><>0<>0<><>::
 013_Confirm_03.wav::AudioStreamWAV::4702150878761065371::1770066324::1770066324::1::::<><><>0<>0<>157a1de0f336450bec3049a27ea3eeb9<>res://.godot/imported/013_Confirm_03.wav-0b53268c8c309194455526bd5356c1b4.sample::
 033_Denied_03.wav::AudioStreamWAV::1607446616361763886::1770066324::1770066324::1::::<><><>0<>0<>7870ed64186b900816f2bc70910fb4eb<>res://.godot/imported/033_Denied_03.wav-6be462d403d4e429517b3a5d742cebb6.sample::
 ELEGANT TYPEWRITER Regular.ttf::FontFile::5424902742184454604::1770236880::1770236880::1::::<><><>0<>0<>bc844b7e89ac6708a9afc52a7bd0809e<>res://.godot/imported/ELEGANT TYPEWRITER Regular.ttf-65de635a87d461b9d22d593a8480725a.fontdata::
-::res://resources/::1770236895
-theme.tres::Theme::7653699463321099179::1770236895::0::1::::<><><>0<>0<><>::uid://cjj4mdbsox2no::::res://assets/ELEGANT TYPEWRITER Regular.ttf
+::res://resources/::1770324293
+theme.tres::Theme::7653699463321099179::1770324293::0::1::::<><><>0<>0<><>::uid://cjj4mdbsox2no::::res://assets/ELEGANT TYPEWRITER Regular.ttf
 volume_slider.gd::GDScript::-1::1770236880::0::1::::<>HSlider<><>0<>0<><>::
 words.gd::GDScript::411450846269028589::1770104995::0::1::::<>Node<><>0<>0<><>::
-::res://scenes/::1770237356
+::res://scenes/::1770324728
 dimmysad-jungle-waves-drumampbass-electronic-inspiring-promo-345013.mp3::AudioStreamMP3::1166203195290923920::1770236880::1770236888::1::::<><><>0<>0<>d72d7e009640ea5b5b367263e1c76d67<>res://.godot/imported/dimmysad-jungle-waves-drumampbass-electronic-inspiring-promo-345013.mp3-20add2fff7f17e78d27ac1cf3fb17ff9.mp3str::
-game.gd::GDScript::6145070605215568489::1770237356::0::1::::<>Control<><>0<>0<><>::
-game.tscn::PackedScene::1701179674522081005::1770237356::0::1::::<><><>0<>0<><>::uid://dhbrkuusslnnf::::res://resources/theme.tres<>uid://ctsyod2uddfrl::::res://scenes/game.gd<>res://resources/volume_slider.gd<>uid://b7800ddtyjhxj::::res://assets/013_Confirm_03.wav<>uid://w5wn8a28fwb3::::res://assets/033_Denied_03.wav<>uid://wru5ladtj1ax::::res://scenes/typedlabel.gd<>uid://qu6gw4djqxpg::::res://scenes/dimmysad-jungle-waves-drumampbass-electronic-inspiring-promo-345013.mp3
+game.gd::GDScript::6145070605215568489::1770324728::0::1::::<>Control<><>0<>0<><>::
+game.tscn::PackedScene::1701179674522081005::1770543751::0::1::::<><><>0<>0<><>::uid://dhbrkuusslnnf::::res://resources/theme.tres<>uid://ctsyod2uddfrl::::res://scenes/game.gd<>res://resources/volume_slider.gd<>uid://b7800ddtyjhxj::::res://assets/013_Confirm_03.wav<>uid://w5wn8a28fwb3::::res://assets/033_Denied_03.wav<>uid://wru5ladtj1ax::::res://scenes/typedlabel.gd<>uid://qu6gw4djqxpg::::res://scenes/dimmysad-jungle-waves-drumampbass-electronic-inspiring-promo-345013.mp3
 typedlabel.gd::GDScript::1580517473447136855::1770237356::0::1::::<>Label<><>0<>0<><>::
 ::res://scripts/::1770119407
 score.gd::GDScript::6295417327143416642::1770119407::0::1::::<>Node<><>0<>0<><>::
